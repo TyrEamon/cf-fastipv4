@@ -7,6 +7,8 @@ export interface Env {
 	SECRET: string;
     HUAWEI_DNS_ENDPOINT?: string;
     PROJECT_ID?: string;
+    SOURCE_DOMAIN?: string;
+    TARGET_DOMAIN?: string;
 }
 
 async function handleCron(env: Env) {
@@ -17,8 +19,8 @@ async function handleCron(env: Env) {
         return;
     }
 
-    const sourceDomain = 'cf.090227.xyz';
-    const targetDomain = 'cf.hw.0721521.xyz';
+    const sourceDomain = env.SOURCE_DOMAIN || 'cf.090227.xyz';
+    const targetDomain = env.TARGET_DOMAIN || 'cf.hw.0721521.xyz';
 
     // 1. Resolve IPs
     console.log(`Resolving IPs for ${sourceDomain}...`);
@@ -66,3 +68,4 @@ Usage:
 		ctx.waitUntil(handleCron(env));
 	},
 };
+
